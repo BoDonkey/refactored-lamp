@@ -1,0 +1,24 @@
+
+# docker-compose.yml
+services:
+  db:
+    image: mongo:4.4.14
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data/db
+  web:
+    build:
+      context: .
+      args:
+        - NODE_ENV
+    ports:
+      - "3000:3000"
+    environment:
+      - APOS_MONGODB_LOG_LEVEL
+      - APOS_MONGODB_URI
+      - NODE_ENV
+    depends_on:
+      - db 
+    volumes:
+      - /srv/www/apostrophe/public/uploads

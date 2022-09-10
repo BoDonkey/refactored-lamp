@@ -1,16 +1,18 @@
-FROM node:carbon
+FROM node:16.15.0-alpine3.15
 
-# Create app directory
-RUN mkdir -p /app
-WORKDIR /app
+ENV NODE_ENV=production
 
-# Bundle app source
-COPY . /app
-RUN npm install
+WORKDIR /srv/www/apostrophe
+RUN chown -R node: /srv/www/apostrophe
 
-# Mount persistent storage
-VOLUME /app/data
-VOLUME /app/public/uploads
+USER node
 
-EXPOSE 3000
-CMD [ "npm", "start" ]
+COPY --chown=node package*.json /srv/www/apostrophe/
+
+RUN npm ci
+
+COPY --chown=node . /srv/www/apostrophe/
+
+#RUN --./scripts/build-assets
+
+CMD ["node", "app.js"]

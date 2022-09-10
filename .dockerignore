@@ -1,0 +1,13 @@
+*
+!LICENSE
+!deployment/
+!lib/
+!modules/
+!node_modules/
+!public/images/
+!README.md
+!scripts/
+!views/
+!app.js
+!package.json
+!package-lock.json
